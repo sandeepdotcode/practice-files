@@ -20,6 +20,10 @@ namespace mystl
 			int value_at(int index);
 			int pop_front();
 			void push_back(int value);
+			int pop_back();
+			int front();
+			int back();
+			void insert(int index, int value);
 		private:
 			int size_of_list = 0;
 			node* head = nullptr;

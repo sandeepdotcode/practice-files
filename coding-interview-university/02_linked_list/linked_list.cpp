@@ -88,9 +88,91 @@ namespace mystl
 	{
 		node *new_node = new node(), *temp = head;
 		new_node->data = value;
+		if (head == nullptr)
+			head = new_node;
+		else
+		{
+			while (temp->next != nullptr)
+				temp = temp->next;
+			temp->next = new_node;
+		}
+		increment_size();
+	}
+
+	int linked_list::pop_back()
+	{
+		if (head == nullptr)
+		{
+			std::cerr << "Empty List!" << std::endl;
+			return std::numeric_limits<int>::min();
+		}
+		node *temp = head;
+		int value = head->data;
+		if (head->next == nullptr)
+		{
+			head = nullptr;
+			delete temp;
+			decrement_size();
+			return value;
+		}
+		while (temp->next->next != nullptr)
+			temp = temp->next;
+		value = temp->next->data;
+		delete temp->next;
+		temp->next = nullptr;
+		decrement_size();
+		return value;
+	}
+
+	int linked_list::front()
+	{
+		if (head == nullptr)
+		{
+			std::cout << "Empty List!";
+			return std::numeric_limits<int>::min();
+		}
+		return head->data;
+	}
+
+	int linked_list::back()
+	{
+		if (head == nullptr)
+		{
+			std::cout << "Empty List!";
+			return std::numeric_limits<int>::min();
+		}
+		node *temp = head;
 		while (temp->next != nullptr)
 			temp = temp->next;
-		temp->next = new_node;
+		return temp->data;
+	}
+
+	void linked_list::insert(int index, int value)
+	{
+		if (index < 0 || index > size())
+		{
+			std::cout << "Index out of bounds!" << std::endl;
+			return;
+		}
+		node *new_node = new node(), *temp = head;
+		new_node->data = value;
+		if (head == nullptr)
+		{
+			head = new_node;
+		}
+		else if (index == 0) 
+		{
+			head->next = nullptr;
+			new_node->next = head;
+			head = new_node;
+		}
+		else 
+		{
+			for (int i = 0; i < index - 1; ++i)
+				temp = temp->next;
+			new_node->next = temp->next;
+			temp->next = new_node;
+		}
 		increment_size();
 	}
 
