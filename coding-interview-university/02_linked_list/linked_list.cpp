@@ -176,6 +176,85 @@ namespace mystl
 		increment_size();
 	}
 
+	void linked_list::erase(int index)
+	{
+		if (head == nullptr) {
+			std::cerr << "Empty List!\n";
+			return;
+		}
+		if (index < 0 || index >= size())
+		{
+			std::cerr << "Index does not exist!\n";
+			return;
+		}
+		node *temp = head;
+		if (index == 0) {
+			head = head->next;
+			delete temp;
+			decrement_size();
+			return;
+		}
+		for (int i = 0; i + 1 < index; ++i)
+			temp = temp->next;
+		node *node_at_index = temp->next;
+		temp->next = temp->next->next;
+		delete node_at_index;
+		decrement_size();
+		
+	}
+
+	// n starts from zero
+	int linked_list::value_n_from_end(int n)
+	{
+		if (n >= size())
+		{
+			std::cerr << "Index does not exist!\n";
+			return std::numeric_limits<int>::min();
+		}
+		node *temp = head;
+		for (int i = 0; i < size() - 1 - n; ++i)
+			temp = temp->next;
+		return temp->data;
+	}
+
+	void linked_list::reverse()
+	{
+		node* prev = nullptr;
+		while (head != nullptr)
+		{
+			node* next_node = head->next;
+			head->next = prev;
+			prev = head;
+			head = next_node;
+		}
+		head = prev;
+	}
+
+	void linked_list::remove_value(int value)
+	{
+		if (head == nullptr)
+		{
+			std::cerr << "Empty List!\n";
+		}
+		node *curr = head, *prev = nullptr;
+		while (curr != nullptr && curr->data != value)
+		{
+			prev = curr;
+			curr = curr->next;
+		}
+		if (curr == nullptr)
+		{
+			std::cout << "Value not found!\n";
+			return;
+		}
+		if (!prev)
+			head = curr->next;
+		else
+			prev->next = curr->next;
+		delete curr;
+		decrement_size();
+	}
+
 	void linked_list::display()
 	{
 		node *temp = head;

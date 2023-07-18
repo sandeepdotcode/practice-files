@@ -24,6 +24,10 @@ namespace mystl
 			int front();
 			int back();
 			void insert(int index, int value);
+			void erase(int index);
+			int value_n_from_end(int n);
+			void reverse();
+			void remove_value(int value);
 		private:
 			int size_of_list = 0;
 			node* head = nullptr;
